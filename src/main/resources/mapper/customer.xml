@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 直接使用代理的方式 -->
+<mapper namespace="com.offcn.customer.dao.CustomerDao">
+
+	<!--查询所有-->
+	<select id="selectCustomerList" resultType="Customer">
+		select * from customer
+	</select>
+
+	<!--主键查询-->
+	<select id="selectCustomerById" parameterType="int" resultType="Customer">
+
+		select * from customer where id = #{id}
+	</select>
+
+	<!--修改-->
+	<update id="update" parameterType="Customer">
+
+		
+UPDATE customer 
+		SET
+			comname = #{comname},
+			companyperson = #{companyperson},
+			comaddress = #{comaddress},
+			comphone = #{comphone},
+			camera = #{camera},
+			present = #{present},
+			remark = #{remark},
+			ADDTIME = #{addtime}
+		WHERE
+			id = #{id};
+	</update>
+
+
+
+	<!--添加-->
+	<insert id="insert" parameterType="Customer">
+INSERT INTO customer
+	(
+		comname,
+		companyperson,
+		comaddress,
+		comphone,
+		camera,
+		present,
+		remark,
+		ADDTIME
+	)
+	VALUES
+	(
+	#{comname},
+	#{companyperson},
+	#{comaddress},
+	#{comphone},
+	#{camera},
+	#{present},
+	#{remark},
+	#{addtime}
+	);
+	</insert>
+
+
+	<delete id="deleteCustomerByIds" parameterType="map">
+
+
+		/*delete from customer where id in(1,2,3)下面就是这个sql语句*/
+		delete from customer
+		<where>
+		/*collection变量名称*/
+			<foreach collection="ids" item="id" separator="," open="id in(" close=")">
+				#{id}
+			</foreach>
+		</where>
+
+	</delete>
+
+
+</mapper>

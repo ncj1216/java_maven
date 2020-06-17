@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 直接使用代理的方式 -->
+<mapper namespace="com.offcn.project.dao.ProjectNeedDao">
+
+	<insert id="insert" parameterType="Analysis">
+	INSERT INTO analysis
+		(
+			id,
+			proname,
+			title,
+			simpledis,
+			detaileddis,
+			ADDTIME,
+			remark
+		)
+	VALUES
+		(
+			#{id},
+			#{proname},
+			#{title},
+			#{simpledis},
+			#{detaileddis},
+			#{addtime},
+			#{remark}
+		);
+	</insert>
+
+
+
+
+	<resultMap id="ANALYSISMAP" type="AnalysisExtends">
+		<id column="id" property="id"/>
+		<result column="proname" property="proname"/>
+		<result column="title" property="title"/>
+		<result column="simpledis" property="simpledis"/>
+		<result column="detaileddis" property="detaileddis"/>
+		<result column="addtime" property="addtime"/>
+		<result column="updatetime" property="updatetime"/>
+		<result column="remark" property="remark"/>
+		<association property="project" javaType="ProjectExtends"></association>
+	</resultMap>
+	<!--列表数据-->
+	<select id="selectPojectNeedList" resultMap="ANALYSISMAP">
+		select * from analysis
+	</select>
+
+
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 直接使用代理的方式 -->
+<mapper namespace="com.offcn.employee.dao.EmployeeDao">
+
+	<resultMap id="EMPLOYEEMAP" type="Employee">
+		<id column="eid" property="eid"/>
+		<result column="ename" property="ename"/>
+		<result column="esex" property="esex"/>
+		<result column="eage" property="eage"/>
+		<result column="telephone" property="telephone"/>
+		<result column="hiredate" property="hiredate"/>
+		<result column="pnum" property="pnum"/>
+		<result column="username" property="username"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="eremark" property="remark"/>
+		<result column="p_fk" property="pFk"/>
+		<result column="d_fk" property="dFk"/>
+		<result column="l_fk" property="lFk"/>
+		<result column="emppic" property="emppic"/>
+	</resultMap>
+	<!--查询所有-->
+	<select id="selectEmployeeListLimit" parameterType="int" resultMap="EMPLOYEEMAP">
+		select e.eid,ename,esex,eage,telephone,hiredate,pnum,username,PASSWORD,e.remark eremark,p_fk,d_fk,l_fk,emppic
+		from employee e
+		limit #{num}
+	</select>
+
+	<select id="selectEmployeeByName" parameterType="string" resultMap="EMPLOYEEMAP">
+
+		select e.eid,ename,esex,eage,telephone,hiredate,pnum,username,PASSWORD,e.remark eremark,p_fk,d_fk,l_fk,emppic
+		from employee e
+		where e.username=#{name}
+
+	</select>
+</mapper>

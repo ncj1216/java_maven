@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 直接使用代理的方式 -->
+<mapper namespace="com.offcn.project.dao.ProjectBaseDao">
+
+
+	<resultMap id="PROJECTBASEMAP" type="ProjectExtends">
+		<id column="pid" property="pid"/>
+		<result column="pname" property="pname"/>
+		<result column="empcount" property="empcount"/>
+		<result column="starttime" property="starttime"/>
+		<result column="buildtime" property="buildtime"/>
+		<result column="cost" property="cost"/>
+		<result column="LEVEL" property="level"/>
+		<result column="endtime" property="endtime"/>
+		<result column="premark" property="remark"/>
+		<result column="emp_fk" property="empFk"/>
+
+		<association property="customer" javaType="Customer">
+			<id column="id" property="id"/>
+			<result column="comname" property="comname"/>
+			<result column="companyperson" property="companyperson"/>
+			<result column="comaddress" property="comaddress"/>
+			<result column="comphone" property="comphone"/>
+			<result column="camera" property="camera"/>
+			<result column="present" property="present"/>
+			<result column="cremark" property="remark"/>
+			<result column="ADDTIME" property="addtime"/>
+		</association>
+
+
+		<association property="employee" javaType="Employee">
+			<id column="eid" property="eid"/>
+			<result column="ename" property="ename"/>
+			<result column="esex" property="esex"/>
+			<result column="eage" property="eage"/>
+			<result column="telephone" property="telephone"/>
+			<result column="hiredate" property="hiredate"/>
+			<result column="pnum" property="pnum"/>
+			<result column="username" property="username"/>
+			<result column="PASSWORD" property="password"/>
+			<result column="eremark" property="remark"/>
+			<result column="p_fk" property="pFk"/>
+			<result column="d_fk" property="dFk"/>
+			<result column="l_fk" property="lFk"/>
+			<result column="emppic" property="emppic"/>
+		</association>
+	</resultMap>
+
+
+	<!--查询所有-->
+	<select id="selectProjectList" resultMap="PROJECTBASEMAP">
+		SELECT pid,pname,empcount,starttime,buildtime,cost,LEVEL,endtime,p.remark premark,emp_fk,
+			c.id,c.comname,c.companyperson,comaddress,comphone,camera,present,c.remark cremark,ADDTIME,
+			e.eid,ename,esex,eage,telephone,hiredate,pnum,username,PASSWORD,e.remark eremark,p_fk,d_fk,l_fk,emppic
+			FROM project p,customer c,employee e
+		WHERE p.comname=c.id AND p.emp_fk=e.eid
+	</select>
+
+	<!--添加-->
+	<insert id="insert" parameterType="Project">
+	INSERT INTO project
+	( 
+			pname, 
+			comname,  
+			empcount, 
+			starttime, 
+			buildtime, 
+			cost, 
+			LEVEL, 
+			endtime, 
+			remark, 
+			emp_fk
+	)
+	VALUES
+	(
+			#{pname}, 
+			#{comname}, 
+			#{empcount}, 
+			#{starttime}, 
+			#{buildtime}, 
+			#{cost}, 
+			#{level}, 
+			#{endtime}, 
+			#{remark},
+			#{empFk}
+	)
+	</insert>
+
+
+
+
+	<!--按照标记查询项目-->
+	<select id="selectProjectByMark"  resultType="Project">
+
+
+
+		select * from project
+		<if test="mark==0">
+			<where>
+				 pid not in(select id from analysis)
+			</where>
+		</if>
+		limit 30
+
+	</select>
+
+
+
+
+
+
+</mapper>

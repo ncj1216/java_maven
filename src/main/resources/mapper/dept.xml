@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 直接使用代理的方式 -->
+<mapper namespace="com.offcn.dept.dao.DeptDao">
+
+	<!--查询所有-->
+	<select id="selectDeptList" resultType="Dept">
+		select * from dept
+	</select>
+</mapper>
